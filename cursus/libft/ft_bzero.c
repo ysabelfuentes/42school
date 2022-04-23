@@ -6,7 +6,7 @@
 /*   By: yfuentes <yfuentes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 15:18:52 by yfuentes          #+#    #+#             */
-/*   Updated: 2022/04/21 12:39:50 by yfuentes         ###   ########.fr       */
+/*   Updated: 2022/04/23 16:43:15 by yfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	ft_memset(s, '0', n);
+	ft_memset(s, '\0', n);
 }

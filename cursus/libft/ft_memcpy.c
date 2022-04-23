@@ -6,7 +6,7 @@
 /*   By: yfuentes <yfuentes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 10:36:37 by yfuentes          #+#    #+#             */
-/*   Updated: 2022/04/21 17:53:03 by yfuentes         ###   ########.fr       */
+/*   Updated: 2022/04/23 17:19:42 by yfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,31 @@
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char	*char_dst;
-	char	*char_src;
 	size_t	i;
 
 	i = 0;
-	char_dst = (char *)dst;
-	char_src = (char *)src;
-	if (dst == src)
-		return (dst);
+	if (!dst && !src)
+		return (0);
 	while (i < n)
 	{
-		char_dst[i] = char_src[i];
+		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
 		i++;
 	}
-	char_dst[i] = '\0';
 	return (dst);
+}
+
+#include <stdio.h>
+
+int	main(void)
+{
+	char	str[] = "memcpy test!";
+	char	str1[30];
+	char	str2[30];
+
+	printf("str: %s\n", str);
+	ft_memcpy(str1, str, ft_strlen(str) + 1);
+	printf("str1 : %s\n", str1);
+	ft_memcpy(str2, "copy", 5);
+	printf("str2: %s\n", str2);
+	return (0);
 }
