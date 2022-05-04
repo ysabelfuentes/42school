@@ -6,12 +6,13 @@
 /*   By: yfuentes <yfuentes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 10:36:37 by yfuentes          #+#    #+#             */
-/*   Updated: 2022/04/23 17:19:42 by yfuentes         ###   ########.fr       */
+/*   Updated: 2022/05/02 11:10:59 by yfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//copies n bytes from memory area src to memory area dst.
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t	i;
@@ -25,20 +26,4 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 		i++;
 	}
 	return (dst);
-}
-
-#include <stdio.h>
-
-int	main(void)
-{
-	char	str[] = "memcpy test!";
-	char	str1[30];
-	char	str2[30];
-
-	printf("str: %s\n", str);
-	ft_memcpy(str1, str, ft_strlen(str) + 1);
-	printf("str1 : %s\n", str1);
-	ft_memcpy(str2, "copy", 5);
-	printf("str2: %s\n", str2);
-	return (0);
 }

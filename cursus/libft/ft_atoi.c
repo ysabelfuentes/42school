@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yfuentes <yfuentes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/04 10:42:18 by lagarcia          #+#    #+#             */
-/*   Updated: 2022/04/23 17:55:05 by yfuentes         ###   ########.fr       */
+/*   Created: 2022/04/27 17:18:24 by yfuentes          #+#    #+#             */
+/*   Updated: 2022/05/02 11:33:40 by yfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(char *str)
+/*Checks if the given integer c is either ' ', '\t', '\n', '\r', '\v' or '\f' 
+ASCII code considered as spaces*/
+static int	ft_isspace(char *str)
 {
 	int	i;
 
@@ -20,6 +22,7 @@ int	ft_isspace(char *str)
 	return (i);
 }
 
+//converts the string pointed to by str to int representation
 int	ft_atoi(const char *str)
 {
 	int	i;

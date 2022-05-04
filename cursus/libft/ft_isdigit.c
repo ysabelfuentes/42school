@@ -6,10 +6,11 @@
 /*   By: yfuentes <yfuentes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 13:12:33 by yfuentes          #+#    #+#             */
-/*   Updated: 2022/04/21 12:15:34 by yfuentes         ###   ########.fr       */
+/*   Updated: 2022/05/02 10:52:27 by yfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//check if a character is a digit.
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
