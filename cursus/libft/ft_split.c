@@ -6,7 +6,7 @@
 /*   By: yfuentes <yfuentes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 17:19:52 by yfuentes          #+#    #+#             */
-/*   Updated: 2022/05/04 12:07:51 by yfuentes         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:26:30 by yfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_clear_splitted(char **str_split)
 	return (NULL);
 }
 
-static size_t	ft_count_cad(char const *s, char c)
+static size_t	ft_count_words(char const *s, char c)
 {
 	size_t	i;
 	int		count;
@@ -49,27 +49,27 @@ static size_t	ft_count_cad(char const *s, char c)
 	return (count);
 }
 
-static char	*ft_get_substring(char const *s, char c, int start, size_t *end)
+static size_t	ft_count_substring(char const *s, char c, size_t start)
 {
-	int	count;
+	size_t	count;
 
 	count = 0;
 	s += start;
 	while (s[count] != c && s[count] != '\0')
 		count++;
-	*end = count;
-	return (ft_substr(s - start, start, count));
+	return (count);
 }
 
-static char	*ft_split2(char **str_split, char const *s, char c, size_t *start)
+static char	*ft_get_substr(char **str_split, char const *s, char c, size_t *i)
 {
 	size_t	end;
 	char	*str_sub;
 
-	str_sub = ft_get_substring(s, c, *start, &end);
+	end = ft_count_substring(s, c, *i);
+	str_sub = ft_substr(s, *i, end);
 	if (!str_sub)
 		return (ft_clear_splitted(str_split));
-	*start += end;
+	*i += end;
 	return (str_sub);
 }
 
@@ -79,20 +79,26 @@ Returns NULL if memory allocation fails.*/
 char	**ft_split(char const *s, char c)
 {
 	char	**str_split;
+	char	*str_tmp;
 	int		count_split;
 	size_t	start;
 
 	if (!s)
 		return (0);
-	count_split = 0;
-	str_split = (char **)malloc(sizeof(char *) * ft_count_cad(s, c) + 1);
+	str_split = (char **)malloc(sizeof(char *) * ft_count_words(s, c) + 1);
 	if (!str_split)
 		return (0);
 	start = 0;
+	count_split = 0;
 	while (start < ft_strlen(s) || s[start] != '\0')
 	{
 		if (s[start] != c)
-			str_split[count_split++] = ft_split2(str_split, s, c, &start);
+		{
+			str_tmp = ft_get_substr(str_split, s, c, &start);
+			if (!str_tmp)
+				return (0);
+			str_split[count_split++] = str_tmp;
+		}
 		else
 			start++;
 	}
