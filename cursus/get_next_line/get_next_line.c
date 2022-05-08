@@ -10,52 +10,116 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "get_next_line.h"
 
-void	ft_putstr(char *str)
+static size_t	ft_strlen_line(const char *s, char *pos_ln)
 {
-	int	cad;
+	size_t	count;
 
-	cad = 0;
-	while (str[cad] != '\0')
+	count = 0;
+	while (s != pos_ln)
 	{
-		write(1, &str[cad], 1);
-		cad++;
+		s++;	
+		count++;
+	}
+	return (count);
+}
+
+//funcion que retorna la primera posicion del caracter \n en el string
+static int get_line_to_ln(char *str, char * buf, char c)
+{
+	char *pos_ln;
+	char *tmp;
+
+	tmp = str;
+	str = ft_strjoin(tmp, buf);
+	free(tmp);
+	pos_ln = ft_strchr(str, c);
+	if (!pos_ln) 
+		return(0);
+	else
+	{
+		//str = ft_substr(str, pos_ln, ft_strlen(str));
+		//return(ft_substr(str, 0, pos_ln));
+		return(ft_strlen_line(str, pos_ln));
 	}
 }
 
 char	*get_next_line(int fd)
 {
-	int		iter;
+	ssize_t		iter;
 	char	buf[BUFFER_SIZE + 1];
+	static char	*str;
+	char *line;
+	int pos_ln;
+	char *tmp;
+	static int j;
 
-	//char	*str_tmp;
-	/*str_tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!str_tmp)
-		return (0);
-    */
-	//iter = read(int fildes, void *buf, size_t nbyte);
-	iter = read(fd, buf, BUFFER_SIZE);
+	j = 1;
+	if(fd == -1 || BUFFER_SIZE <= 0)
+		return(NULL);
+	iter = 1;
 	while (iter)
 	{
-		//ft_putstr(char *str);
-		printf("iter: %d\n", iter);
-		printf("texto: %s\n", buf);
+		
 		iter = read(fd, buf, BUFFER_SIZE);
+		buf[iter] = '\0';
+		if(iter == -1)
+			return(NULL);
+		pos_ln = get_line_to_ln(str, buf, '\n');
+		if(pos_ln != 0)
+			iter = 0;
+		/*str_tmp = (char *)buf;
+		//str_tmp[iter] = '\0';
+		//printf("ITER: %d\n", iter);
+		//printf("TEXTO: %s\n", str_tmp);
+		if(iter == 0)
+		{
+			printf("Adentro: Archivo vacio o fin de archivo \n");
+			return (0);
+		}
+		else
+		{
+			str_tmp = get_line_to_ln(str_tpm, buf, '\n');
+			return (str_tmp);
+		}*/
 	}
-	return (NULL);
+	line = ft_substr(str, 0, pos_ln);
+	printf("linea = %d - texto = %s\n",j,line);
+	j++;
+	tmp = str;
+	str = ft_substr(tmp, pos_ln, ft_strlen(tmp));
+	free(tmp);
+	return(line);
 }
 
 int	main(void)
 {
-	char	*file = "readme.txt";
 	int		fd;
+	char *str;
+	int fin;
+	int i;
 
-	fd = open(file, O_RDONLY);
-	get_next_line(fd);
-	close(fd);
+	fd = open("texto.txt", O_RDONLY);
+	if(fd == -1)
+		printf("Error al abrir el archivo \n");
+	else
+	{
+		fin = 1;
+		i = 1;
+		while(fin)
+		{
+			printf("linea = %d\n",i);
+			str = get_next_line(fd);
+			if(!str)
+				fin = 0;
+			//printf("linea = %d - texto = %s\n",i,str);
+			i++;
+			free(str);
+		}
+		if (fin == 0)
+			printf("Afuera: Archivo vacio o fin de archivo \n");
+		close(fd);
+	}
 	return (0);
 }
