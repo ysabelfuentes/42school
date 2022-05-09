@@ -12,12 +12,13 @@
 
 #include "get_next_line.h"
 
-static size_t	ft_strlen_line(const char *s, char *pos_ln)
+//static size_t	ft_strlen_line(const char *s, char *pos_ln)
+static size_t	ft_strlen_line(const char *s, char c)
 {
 	size_t	count;
 
 	count = 0;
-	while (s != pos_ln)
+	while (s[count] &&  s[count] != c)
 	{
 		s++;
 		count++;
@@ -55,7 +56,7 @@ char	*get_next_line(int fd)
 	char		buf[BUFFER_SIZE + 1];
 	static char	*str;
 	char		*line;
-	char		*pos_ln;
+	//char		*pos_ln;
 	int			pos;
 	char		*tmp;
 
@@ -74,14 +75,23 @@ char	*get_next_line(int fd)
 		str = ft_strjoin(str, buf);
 		free(tmp);
 	}
-	pos_ln = ft_strchr(str, '\n');
-	if (!pos_ln)
-		pos = 0;
-	else
-		pos = ft_strlen_line(str, pos_ln);
+	//pos_ln = ft_strchr(str, '\n');
+	//if (!pos_ln)
+	//	pos = 0;
+	//else
+	pos = ft_strlen_line(str, '\n');
 	line = ft_substr(str, 0, pos + 1);
 	tmp = str;
-	str = ft_substr(tmp, pos, ft_strlen(tmp));
+	printf("POSICION = %d\n", pos);
+	printf("LONGITUD STR = %d\n", ft_strlen(tmp));
+	printf("TMP = %d\n", tmp[0]);
+	if (!str[ft_strlen(tmp)])
+	{
+		free(str);
+		return (NULL);
+	}
+	str = ft_substr(tmp, pos, ft_strlen(tmp) - pos);
+	printf("STR = %s", str);
 	free(tmp);
 	if (iter == 0)
 	{
@@ -103,22 +113,22 @@ int	main(void)
 	//fd = open("file_test/multiple_nl.txt", O_RDONLY);
 	//fd = open("file_test/variable_nls.txt", O_RDONLY);
 	//fd = open("file_test/only_nl.txt", O_RDONLY);
-	//fd = open("file_test/lines_around_10.txt", O_RDONLY);
+	fd = open("file_test/lines_around_10.txt", O_RDONLY);
 	//fd = open("file_test/giant_line.txt", O_RDONLY);
 	//fd = open("file_test/giant_line_nl.txt", O_RDONLY);
-	fd = open("file_test/texto.txt", O_RDONLY);
+	//fd = open("file_test/texto.txt", O_RDONLY);
 	//fd = open("file_test/texto1.txt", O_RDONLY);
 	if (fd == -1)
 		printf("Error al abrir el archivo \n");
 	else
 	{
 		i = 1;
-		while (i)
+		while (i <= 10)
 		{
 			str = get_next_line(fd);
 			if (*str == '\0')
 				break ;
-			printf("linea = %d - texto = %s\n\n", i, str);
+			printf("linea = %d - texto = %s", i, str);
 			free(str);
 			i++;
 		}
