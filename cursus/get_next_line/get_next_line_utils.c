@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yfuentes <yfuentes@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: yfuentes <yfuentes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 13:24:14 by yfuentes          #+#    #+#             */
-/*   Updated: 2022/05/07 13:24:14 by yfuentes         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:14:12 by yfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,41 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+//writes len bytes of value c (converted to anunsigned char) to the string b.
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		((unsigned char *)b)[i] = c;
+		i++;
+	}
+	return (b);
+}
+
+//Clear Memory. Writes n zero bytes to the string s. If n is zero, does nothing.
+void	ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, 0, n);
+}
+
+//contiguously allocates enough space memory block,
+//the allocated memory is filled with bytes of value zero
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ptr;
+
+	if ((count + size) < count)
+		return (0);
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (0);
+	ft_bzero(ptr, count * size);
+	return (ptr);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -85,7 +120,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (ft_strlen(src));
 }
 
-
 /* Returns a new string, formed by the concatenation of 's1' and 's2'.
 Returns NULL if memory allocation fails.*/
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -98,6 +132,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (0);
 	length_s1 = ft_strlen(s1);
 	length_s2 = ft_strlen(s2);
+	//printf("largo s1: %d\n",length_s1);
+	//printf("largo s2: %d\n",length_s2);
 	str = (char *)malloc(((length_s1 + length_s2) + 1) * (sizeof(char)));
 	if (!str)
 		return (0);

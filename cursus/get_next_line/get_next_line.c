@@ -6,7 +6,7 @@
 /*   By: yfuentes <yfuentes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:30:46 by yfuentes          #+#    #+#             */
-/*   Updated: 2022/05/06 17:03:06 by yfuentes         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:43:37 by yfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,27 @@ static size_t	ft_strlen_line(const char *s, char *pos_ln)
 	count = 0;
 	while (s != pos_ln)
 	{
-		s++;	
+		s++;
 		count++;
 	}
 	return (count);
 }
-
+/*
 //funcion que retorna la primera posicion del caracter \n en el string
-static int get_line_to_ln(char *str, char * buf, char c)
+static int	get_line_to_ln(char *str, char *buf, char c)
 {
-	char *pos_ln;
-	char *tmp;
+	char	*pos_ln;
+	char	*tmp;
 
+	//printf("ENTRO\n");
 	tmp = str;
+	printf("ASIGNACON TMP = %s\n\n",tmp);
 	str = ft_strjoin(tmp, buf);
+	printf("STR CONCATENADO = %s\n\n", str);
 	free(tmp);
 	pos_ln = ft_strchr(str, c);
-	if (!pos_ln) 
+	printf("POSICION_LN PUNTERO: %s\n\n", pos_ln);
+	if (!pos_ln)
 		return(0);
 	else
 	{
@@ -44,81 +48,80 @@ static int get_line_to_ln(char *str, char * buf, char c)
 		return(ft_strlen_line(str, pos_ln));
 	}
 }
-
+*/
 char	*get_next_line(int fd)
 {
 	ssize_t		iter;
-	char	buf[BUFFER_SIZE + 1];
+	char		buf[BUFFER_SIZE + 1];
 	static char	*str;
-	char *line;
-	int pos_ln;
-	char *tmp;
-	static int j;
+	char		*line;
+	char		*pos_ln;
+	int			pos;
+	char		*tmp;
 
-	j = 1;
-	if(fd == -1 || BUFFER_SIZE <= 0)
-		return(NULL);
+	if ((fd < 0) || (BUFFER_SIZE <= 0))
+		return (NULL);
 	iter = 1;
-	while (iter)
+	if (!str)
+		str = ft_calloc(sizeof(char), 1);
+	while (!ft_strchr(str, '\n') && iter)
 	{
-		
 		iter = read(fd, buf, BUFFER_SIZE);
+		if (iter == -1)
+			return (NULL);
 		buf[iter] = '\0';
-		if(iter == -1)
-			return(NULL);
-		pos_ln = get_line_to_ln(str, buf, '\n');
-		if(pos_ln != 0)
-			iter = 0;
-		/*str_tmp = (char *)buf;
-		//str_tmp[iter] = '\0';
-		//printf("ITER: %d\n", iter);
-		//printf("TEXTO: %s\n", str_tmp);
-		if(iter == 0)
-		{
-			printf("Adentro: Archivo vacio o fin de archivo \n");
-			return (0);
-		}
-		else
-		{
-			str_tmp = get_line_to_ln(str_tpm, buf, '\n');
-			return (str_tmp);
-		}*/
+		tmp = str;
+		str = ft_strjoin(str, buf);
+		free(tmp);
 	}
-	line = ft_substr(str, 0, pos_ln);
-	printf("linea = %d - texto = %s\n",j,line);
-	j++;
+	pos_ln = ft_strchr(str, '\n');
+	if (!pos_ln)
+		pos = 0;
+	else
+		pos = ft_strlen_line(str, pos_ln);
+	line = ft_substr(str, 0, pos + 1);
 	tmp = str;
-	str = ft_substr(tmp, pos_ln, ft_strlen(tmp));
+	str = ft_substr(tmp, pos, ft_strlen(tmp));
 	free(tmp);
-	return(line);
+	if (iter == 0)
+	{
+		line = str;
+		str = NULL;
+	}
+	return (line);
 }
 
 int	main(void)
 {
 	int		fd;
-	char *str;
-	int fin;
-	int i;
+	char	*str;
+	int		i;
 
-	fd = open("texto.txt", O_RDONLY);
-	if(fd == -1)
+	//fd = open("file_test/1char.txt", O_RDONLY);
+	//fd = open("file_test/empty.txt", O_RDONLY);
+	//fd = open("file_test/one_line_no_nl.txt", O_RDONLY);
+	//fd = open("file_test/multiple_nl.txt", O_RDONLY);
+	//fd = open("file_test/variable_nls.txt", O_RDONLY);
+	//fd = open("file_test/only_nl.txt", O_RDONLY);
+	//fd = open("file_test/lines_around_10.txt", O_RDONLY);
+	//fd = open("file_test/giant_line.txt", O_RDONLY);
+	//fd = open("file_test/giant_line_nl.txt", O_RDONLY);
+	fd = open("file_test/texto.txt", O_RDONLY);
+	//fd = open("file_test/texto1.txt", O_RDONLY);
+	if (fd == -1)
 		printf("Error al abrir el archivo \n");
 	else
 	{
-		fin = 1;
 		i = 1;
-		while(fin)
+		while (i)
 		{
-			printf("linea = %d\n",i);
 			str = get_next_line(fd);
-			if(!str)
-				fin = 0;
-			//printf("linea = %d - texto = %s\n",i,str);
-			i++;
+			if (*str == '\0')
+				break ;
+			printf("linea = %d - texto = %s\n\n", i, str);
 			free(str);
+			i++;
 		}
-		if (fin == 0)
-			printf("Afuera: Archivo vacio o fin de archivo \n");
 		close(fd);
 	}
 	return (0);
