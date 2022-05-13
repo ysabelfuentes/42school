@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yfuentes <yfuentes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/07 13:24:14 by yfuentes          #+#    #+#             */
-/*   Updated: 2022/05/13 13:01:40 by yfuentes         ###   ########.fr       */
+/*   Created: 2022/05/12 13:25:31 by yfuentes          #+#    #+#             */
+/*   Updated: 2022/05/13 12:55:30 by yfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 //calculate the length of a string.
 size_t	ft_strlen(const char *s)
@@ -69,7 +69,7 @@ char	*ft_strjoin(char *s1, char *s2)
 			str[i] = s1[i];
 	while (s2[j] != '\0')
 		str[i++] = s2[j++];
-	str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
+	str[i++] = '\0';
 	free(s1);
 	return (str);
 }
