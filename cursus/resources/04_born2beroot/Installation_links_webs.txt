@@ -1,0 +1,5 @@
+Born2beroot 01: Creating a Debian Virtual Machine
+https://www.codequoi.com/en/born2beroot-01-creating-a-debian-virtual-machine/
+
+42cursus - Born2beroot - Installation
+https://github.com/hanshazairi/42-born2beroot
