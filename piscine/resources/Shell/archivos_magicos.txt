@@ -1,0 +1,11 @@
+ARCHIVOS MAGICOS
+
+1.- touch ft_magic
+
+2.- Escribir dentro del archivo
+
+3.- 41 string 42 "42 file"
+
+PARA EJECUTARLO
+
+File -m ft_magic <arvhivo_prueba>

@@ -1,0 +1,17 @@
+TIPS PARA EXAMEN
+
+Exam  Exam //Entrar al equipo
+Abrir la terminal
+Teclear Examshell
+Enter
+Introducir usuario y contraseña de la intra
+Abrir 4 terminales //informacion examen - ejercicios - ejecutar y compilar - ver documento ejercicios
+En documentos esta la carpeta donde se deben crear los archivos de los ejercicios
+Rendu
+Hacer ls -la para ver que esta el .git
+Luego puedes crear o no el .gitignore (para ignorar archivos: .Ds_store, *a.out, main/*)
+
+PARA SUBIR LOS EJERCICIOS
+Solo hacer git add, git commit y git push
+
+OJO - ELIMINAR LOS MAINS Y LOS EJECUTABLES ./a.out

@@ -1,0 +1,32 @@
+INSTALACION DE VISUAL ESTUDIO EN MAC DE 42
+
+Descargar internet visual studio code (IDE)
+
+Para ejecutar un fichero en c, hay un pulling/extension que se llama CODE RUNNER (instalar).
+
+PARA VALIDACIONES DE MOLINETTE, instalar estas extensiones:
+
+42 Header -> para la cabecera de los archivos c
+
+42-norminette
+
+42 c-format -> ejecutar en el terminal comando Pip3 install .... 
+
+Error lens
+
+
+COMANDOS BASICOS:
+
+CTRL ALT H (windows) -> obtiene la cabecera
+ALT CMD H (Mac)
+ALT CHIF F 
+
+norminette <archivo> //Para comprobar que la norminette es valida en los ficheros ejecutar el comando:
+
+gcc -o <archivo.c> -> para compilar y generar el ejecutable ./a.out
+
+./a.out //para ejecutar
+
+gcc -o -Wall -Werror -Wextra <archivo1> <archivo2> .... && ./a.out // para ejecutar y compilar norminette
+
+
